@@ -190,11 +190,11 @@ class Loader
      */
     protected function sanitiseVariableValue($name, $value)
     {
-        if (!$value || !is_string($value)) {
+        $value = trim($value);
+
+        if (!$value) {
             return array($name, $value);
         }
-
-        $value = trim($value);
 
         if ($this->beginsWithAQuote($value)) { // value starts with a quote
             $quote = $value[0];
@@ -216,7 +216,6 @@ class Loader
             $value = preg_replace($regexPattern, '$1', $value);
             $value = str_replace("\\$quote", $quote, $value);
             $value = str_replace('\\\\', '\\', $value);
-            $value = trim($value);
         } else {
             $parts = explode(' #', $value, 2);
             $value = trim($parts[0]);
@@ -225,13 +224,15 @@ class Loader
             if (preg_match('/\s+/', $value) > 0) {
                 throw new InvalidFileException('Dotenv values containing spaces must be surrounded by quotes.');
             }
+        }
 
+        if (is_string($value)) {
             $v = strtolower(trim($value));
 
             switch ($v) {
                 case 'null':
                     $value = null;
-    //                die('value: '.(is_null($value) ? 'null' : 'not null'));
+                    // die($name.': '.'null value');
                     break;
 
                 case 'true':
