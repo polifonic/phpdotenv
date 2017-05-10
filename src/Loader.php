@@ -230,9 +230,11 @@ class Loader
             $v = strtolower(trim($value));
 
             switch ($v) {
+                case '':
+                    $value = $v;
+                    break;
                 case 'null':
                     $value = null;
-                    // die($name.': '.'null value');
                     break;
 
                 case 'true':

@@ -33,7 +33,7 @@ class DotenvTest extends PHPUnit_Framework_TestCase
         $this->assertSame('with spaces', getenv('SPACED'));
         $this->assertEmpty(getenv('EMPTY'));
 
-        $this->assertEmpty(getenv('NULL'));
+        $this->assertSame('', getenv('NULL'));
 
         $this->assertEquals(1, getenv('ETRUE'));
         $this->assertEquals(1, getenv('EYES'));
@@ -68,14 +68,14 @@ class DotenvTest extends PHPUnit_Framework_TestCase
         $this->assertSame('pgsql:host=localhost;dbname=test', getenv('QEQUALS'));
         $this->assertSame('test some escaped characters like a quote (") or maybe a backslash (\\)', getenv('QESCAPED'));
 
-        $this->assertSame('null', getenv('QNULL'));
-        $this->assertSame('true', getenv('QTRUE'));
-        $this->assertSame('yes', getenv('QYES'));
-        $this->assertSame('on', getenv('QON'));
+        $this->assertSame('', getenv('QNULL'));
+        $this->assertSame('1', getenv('QTRUE'));
+        $this->assertSame('1', getenv('QYES'));
+        $this->assertSame('1', getenv('QON'));
 
-        $this->assertSame('false', getenv('QFALSE'));
-        $this->assertSame('no', getenv('QNO'));
-        $this->assertSame('off', getenv('QOFF'));
+        $this->assertSame('', getenv('QFALSE'));
+        $this->assertSame('', getenv('QNO'));
+        $this->assertSame('', getenv('QOFF'));
     }
 
     /**
@@ -107,7 +107,7 @@ class DotenvTest extends PHPUnit_Framework_TestCase
         $this->assertSame('with spaces', $_SERVER['SPACED']);
         $this->assertEmpty($_SERVER['NULL']);
 
-        $this->assertSame('null', $_SERVER['QNULL']);
+        $this->assertNull($_SERVER['QNULL']);
 
         $this->assertTrue($_SERVER['ETRUE']);
         $this->assertTrue($_SERVER['EYES']);
@@ -117,13 +117,13 @@ class DotenvTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($_SERVER['ENO']);
         $this->assertFalse($_SERVER['EOFF']);
 
-        $this->assertSame('true', $_SERVER['QTRUE']);
-        $this->assertSame('yes', $_SERVER['QYES']);
-        $this->assertSame('on', $_SERVER['QON']);
+        $this->assertTrue($_SERVER['QTRUE']);
+        $this->assertTrue($_SERVER['QYES']);
+        $this->assertTrue($_SERVER['QON']);
 
-        $this->assertSame('false', $_SERVER['QFALSE']);
-        $this->assertSame('no', $_SERVER['QNO']);
-        $this->assertSame('off', $_SERVER['QOFF']);
+        $this->assertFalse($_SERVER['QFALSE']);
+        $this->assertFalse($_SERVER['QNO']);
+        $this->assertFalse($_SERVER['QOFF']);
     }
 
     public function testDotenvLoadsServerGlobals()
@@ -135,7 +135,7 @@ class DotenvTest extends PHPUnit_Framework_TestCase
         $this->assertSame('with spaces', $_ENV['SPACED']);
         $this->assertEmpty($_ENV['NULL']);
 
-        $this->assertSame('null', $_ENV['QNULL']);
+        $this->assertSame(null, $_ENV['QNULL']);
 
         $this->assertTrue($_ENV['ETRUE']);
         $this->assertTrue($_ENV['EYES']);
@@ -145,13 +145,13 @@ class DotenvTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($_ENV['ENO']);
         $this->assertFalse($_ENV['EOFF']);
 
-        $this->assertSame('true', $_ENV['QTRUE']);
-        $this->assertSame('yes', $_ENV['QYES']);
-        $this->assertSame('on', $_ENV['QON']);
+        $this->assertTrue($_ENV['QTRUE']);
+        $this->assertTrue($_ENV['QYES']);
+        $this->assertTrue($_ENV['QON']);
 
-        $this->assertSame('false', $_ENV['QFALSE']);
-        $this->assertSame('no', $_ENV['QNO']);
-        $this->assertSame('off', $_ENV['QOFF']);
+        $this->assertFalse($_ENV['QFALSE']);
+        $this->assertFalse($_ENV['QNO']);
+        $this->assertFalse($_ENV['QOFF']);
     }
 
     /**
